@@ -1,11 +1,15 @@
 <?php
 
-$num = 0;
+// $numbers = [1, 2, 3, 4, 5];
+// foreach ($numbers as $number) {
+//     echo $number * 2 . PHP_EOL;
+// }
 
-while (true) {
-    if ($num < 5) {
-      echo ++$num * 10 . PHP_EOL;
-    } else {
-    break;
-    }
+$currencies = [
+    'japan' => 'yen',
+    'us' => 'dollar',
+    'england' => 'pond',
+];
+foreach ($currencies as $country => $currency) {
+    echo $country . ': ' . $currency . PHP_EOL;
 }

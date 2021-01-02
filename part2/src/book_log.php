@@ -43,11 +43,15 @@ while (true) {
         echo '登録が完了しました' . PHP_EOL . PHP_EOL;
     } elseif ($num === '2') {
         echo '読書ログを表示します' . PHP_EOL;
-        echo '書籍名：' . $title . PHP_EOL;
-        echo '著者名：' . $author . PHP_EOL;
-        echo '読書状況：' . $status . PHP_EOL;
-        echo '評価：' . $rate . PHP_EOL;
-        echo '感想：' . $review . PHP_EOL;
+
+        foreach ($books as $book) {
+            echo '書籍名：' . $book['title'] . PHP_EOL;
+            echo '著者名：' . $book['author'] . PHP_EOL;
+            echo '読書状況：' . $book['status'] . PHP_EOL;
+            echo '評価：' . $book['rate'] . PHP_EOL;
+            echo '感想：' . $book['review'] . PHP_EOL;
+            echo '------------' . PHP_EOL;
+        }
     } elseif ($num === '9') {
         // アプリケーションを終了する
         break;
