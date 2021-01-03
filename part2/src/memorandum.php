@@ -37,7 +37,7 @@ function updateMemorandum($memorandums)
     return $memorandums;
 }
 
-function deleteMemorandum()
+function deleteMemorandum($memorandums)
 {
     displayMemorandums($memorandums);
     echo '削除するメモの番号を選んでください:';
@@ -77,3 +77,5 @@ while (true) {
         break;
     }
 }
+
+echo 'Bye Bye!';
