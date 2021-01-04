@@ -43,6 +43,7 @@ function deleteMemorandum($memorandums)
     echo '削除するメモの番号を選んでください:';
     $num = trim(fgets(STDIN));
     unset($memorandums[(int)$num-1]);
+    // メモの番号に抜けがないように切り詰める
     $memorandums = array_values($memorandums);
 
     return $memorandums;
