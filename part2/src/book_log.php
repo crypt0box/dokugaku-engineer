@@ -14,7 +14,7 @@ function dbConnect()
     return $link;
 }
 
-function createBook()
+function createBook($link)
 {
     echo '読書ログを登録してください' . PHP_EOL;
     echo '書籍名：';
@@ -27,20 +27,44 @@ function createBook()
     $status = trim(fgets(STDIN));
 
     echo '評価（５点満点の整数）：';
-    $rate = trim(fgets(STDIN));
+    $rate = (int) trim(fgets(STDIN));
 
     echo '感想：';
     $review = trim(fgets(STDIN));
 
+    $sql = <<<EOT
+    INSERT INTO books (
+        title,
+        author,
+        status,
+        rate,
+        review
+    ) VALUES (
+        "{$title}",
+        "{$author}",
+        "{$status}",
+        $rate,
+        "{$review}"
+    )
+    EOT;
+
+    $result = mysqli_query($link, $sql);
+    if ($result) {
+        echo 'データを追加しました' . PHP_EOL;
+    } else {
+        echo 'Error: データの追加に失敗しました' . PHP_EOL;
+        echo 'Debugging error: ' . mysqli_error($link) . PHP_EOL;
+    }
+
     echo '登録が完了しました' . PHP_EOL . PHP_EOL;
 
-    return [
-      'title' => $title,
-      'author' => $author,
-      'status' => $status,
-      'rate' => $rate,
-      'review' => $review,
-    ];
+    // return [
+    //   'title' => $title,
+    //   'author' => $author,
+    //   'status' => $status,
+    //   'rate' => $rate,
+    //   'review' => $review,
+    // ];
 }
 
 function displayBooks($books)
@@ -67,12 +91,11 @@ while (true) {
     $num = trim(fgets(STDIN));
     
     if ($num === '1') {
-        $books[] = createBook();
+        createBook($link);
     } elseif ($num === '2') {
         displayBooks($books);
     } elseif ($num === '9') {
         // アプリケーションを終了する
-
         mysqli_close($link);
         echo 'データベースとの接続を切断しました' . PHP_EOL;
         break;
