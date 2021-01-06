@@ -14,23 +14,47 @@ function dbConnect()
     return $link;
 }
 
+function validate($books)
+{
+    $errors = [];
+
+    // 書籍名が正しく入力されているかチェック
+    if (!strlen($books['title'])) {
+        $errors['title'] = '書籍名を入力してください';
+    } elseif (strlen($books['title']) > 255) {
+        $errors['title'] = '書籍名は255文字以内で入力してください';
+    }
+
+    return $errors;
+}
+
 function createBook($link)
 {
+    $books = [];
+
     echo '読書ログを登録してください' . PHP_EOL;
     echo '書籍名：';
-    $title = trim(fgets(STDIN));
+    $books['title'] = trim(fgets(STDIN));
 
     echo '著者名：';
-    $author = trim(fgets(STDIN));
+    $books['author'] = trim(fgets(STDIN));
 
     echo '読書状況（未読，読んでる，読了）：';
-    $status = trim(fgets(STDIN));
+    $books['status'] = trim(fgets(STDIN));
 
     echo '評価（５点満点の整数）：';
-    $rate = (int) trim(fgets(STDIN));
+    $books['rate'] = (int) trim(fgets(STDIN));
 
     echo '感想：';
-    $review = trim(fgets(STDIN));
+    $books['review'] = trim(fgets(STDIN));
+
+    $validated = validate($books);
+    if (count($validated) > 0) {
+        foreach ($validated as $error) {
+            echo $error . PHP_EOL;
+        }
+        return;
+    }
 
     $sql = <<<EOT
     INSERT INTO books (
@@ -40,11 +64,11 @@ function createBook($link)
         rate,
         review
     ) VALUES (
-        "{$title}",
-        "{$author}",
-        "{$status}",
-        $rate,
-        "{$review}"
+        "{$books['title']}",
+        "{$books['author']}",
+        "{$books['status']}",
+        "{$books['rate']}",
+        "{$books['review']}"
     )
     EOT;
 
