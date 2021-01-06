@@ -16,3 +16,37 @@ CREATE TABLE books (
     review VARCHAR(1024),
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) DEFAULT CHARACTER SET=utf8mb4;
+
+INSERT INTO companies (
+    name,
+    establish_data,
+    founder
+) VALUES (
+    'mercari inc',
+    '2013-02-01',
+    'Shintaro Yamada'
+);
+
+INSERT INTO companies (
+    name,
+    establish_data,
+    founder
+) VALUES (
+    'yahoo',
+    '2013-02-a',
+    'Namonaki hito'
+);
+
+INSERT INTO books (
+    title,
+    author,
+    status,
+    rate,
+    review
+) VALUES (
+    'tenshi no saezuri',
+    'yusuke kishi',
+    'complete',
+    5,
+    'my best awesome book'
+);
