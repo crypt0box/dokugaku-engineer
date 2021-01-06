@@ -14,15 +14,38 @@ function dbConnect()
     return $link;
 }
 
-function validate($books)
+function validate($book)
 {
     $errors = [];
 
     // 書籍名が正しく入力されているかチェック
-    if (!strlen($books['title'])) {
+    if (!strlen($book['title'])) {
         $errors['title'] = '書籍名を入力してください';
-    } elseif (strlen($books['title']) > 255) {
+    } elseif (strlen($book['title']) > 255) {
         $errors['title'] = '書籍名は255文字以内で入力してください';
+    }
+    
+    // 著者名が正しく入力されているかチェック
+    if (!strlen($book['author'])) {
+        $errors['author'] = '著者名を入力してください';
+    } elseif (strlen($book['author']) > 255) {
+        $errors['author'] = '著者名は255文字以内で入力してください';
+    }
+
+    // 評価が正しく入力されているかチェック
+    if ($book['rate'] < 1 || $book['rate'] > 5) {
+        $errors['rate'] = '評価は1~5の整数を入力してください';
+    }
+    
+    // 読書状況が正しく入力されているかチェック
+    $selectable_status = ['未読', '読んでる', '読了'];
+    if (!in_array($book['status'], $selectable_status, true)) {
+        $errors['status'] = '読書状況は[未読][読んでる][読了]のいずれかで入力してください';
+    }
+
+    // 感想が正しく入力されているかチェック
+    if (strlen($book['review']) > 1024) {
+        $errors['review'] = '感想は1024文字以内で入力してください';
     }
 
     return $errors;
@@ -30,25 +53,25 @@ function validate($books)
 
 function createBook($link)
 {
-    $books = [];
+    $book = [];
 
     echo '読書ログを登録してください' . PHP_EOL;
     echo '書籍名：';
-    $books['title'] = trim(fgets(STDIN));
+    $book['title'] = trim(fgets(STDIN));
 
     echo '著者名：';
-    $books['author'] = trim(fgets(STDIN));
+    $book['author'] = trim(fgets(STDIN));
 
     echo '読書状況（未読，読んでる，読了）：';
-    $books['status'] = trim(fgets(STDIN));
+    $book['status'] = trim(fgets(STDIN));
 
     echo '評価（５点満点の整数）：';
-    $books['rate'] = (int) trim(fgets(STDIN));
+    $book['rate'] = (int) trim(fgets(STDIN));
 
     echo '感想：';
-    $books['review'] = trim(fgets(STDIN));
+    $book['review'] = trim(fgets(STDIN));
 
-    $validated = validate($books);
+    $validated = validate($book);
     if (count($validated) > 0) {
         foreach ($validated as $error) {
             echo $error . PHP_EOL;
@@ -64,11 +87,11 @@ function createBook($link)
         rate,
         review
     ) VALUES (
-        "{$books['title']}",
-        "{$books['author']}",
-        "{$books['status']}",
-        "{$books['rate']}",
-        "{$books['review']}"
+        "{$book['title']}",
+        "{$book['author']}",
+        "{$book['status']}",
+        "{$book['rate']}",
+        "{$book['review']}"
     )
     EOT;
 
@@ -112,7 +135,7 @@ while (true) {
     echo '2. 読書ログを表示' . PHP_EOL;
     echo '9. アプリケーションを終了' . PHP_EOL;
     echo '番号を選択してください（1,2,9）:';
-    $num = trim(fgets(STDIN));
+    $num = (int) trim(fgets(STDIN));
     
     if ($num === '1') {
         createBook($link);
