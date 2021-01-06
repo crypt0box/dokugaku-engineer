@@ -14,8 +14,11 @@ $sql = 'SELECT name, founder FROM companies';
 $results = mysqli_query($link, $sql);
 
 while ($company = mysqli_fetch_assoc($results)) {
-    var_export($company);
+    echo '会社名：' . $company['name'] . PHP_EOL;
+    echo '代表者名：' . $company['founder'] . PHP_EOL;
 }
+
+mysqli_free_result($results);
 
 // $sql = <<<EOT
 // INSERT INTO companies (

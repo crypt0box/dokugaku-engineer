@@ -9,8 +9,6 @@ function dbConnect()
         exit;
     }
     
-    echo 'データベースに接続できました' . PHP_EOL;
-    
     return $link;
 }
 
@@ -114,10 +112,14 @@ function createBook($link)
     // ];
 }
 
-function displayBooks($books)
+function displayBooks($link)
 {
     echo '読書ログを表示します' . PHP_EOL;
-    foreach ($books as $book) {
+
+    $sql = 'SELECT title, author, status, rate, review FROM books';
+    $results = mysqli_query($link, $sql);
+
+    while ($book = mysqli_fetch_assoc($results)) {
         echo '書籍名：' . $book['title'] . PHP_EOL;
         echo '著者名：' . $book['author'] . PHP_EOL;
         echo '読書状況：' . $book['status'] . PHP_EOL;
@@ -125,26 +127,26 @@ function displayBooks($books)
         echo '感想：' . $book['review'] . PHP_EOL;
         echo '------------' . PHP_EOL;
     }
+
+    mysqli_free_result($results);
 }
 
 $link = dbConnect();
-$books = [];
 
 while (true) {
     echo '1. 読書ログを登録' . PHP_EOL;
     echo '2. 読書ログを表示' . PHP_EOL;
     echo '9. アプリケーションを終了' . PHP_EOL;
     echo '番号を選択してください（1,2,9）:';
-    $num = (int) trim(fgets(STDIN));
+    $num = trim(fgets(STDIN));
     
     if ($num === '1') {
         createBook($link);
     } elseif ($num === '2') {
-        displayBooks($books);
+        displayBooks($link);
     } elseif ($num === '9') {
         // アプリケーションを終了する
         mysqli_close($link);
-        echo 'データベースとの接続を切断しました' . PHP_EOL;
         break;
     }
 }
