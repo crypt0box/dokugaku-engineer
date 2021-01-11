@@ -13,7 +13,7 @@
 
 <body>
     <h1>会社情報の登録</h1>
-    <form action="" method="POST">
+    <form action="create.php" method="POST">
         <div>
             <label for="name">会社名</label>
             <input type="text" id="name" name="name">
