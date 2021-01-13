@@ -36,3 +36,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     createCompany($link, $company);
     mysqli_close($link);
 }
+
+header("Location: index.php");
