@@ -22,33 +22,36 @@
 
         <div>
             <label for="title">書籍名</label>
-            <input type="text" id="title" name="title">
+            <input type="text" id="title" name="title" value="<?php echo $review['title'] ?>">
         </div>
         <div>
             <label for="author">著者名</label>
-            <input type="text" id="author" name="author">
+            <input type="text" id="author" name="author" value="<?php echo $review['author'] ?>">
         </div>
         <div>
             <label>読書状況</label>
             <div>
+                <input type="radio" id="status1" name="status" value="未読"
+                    <?php echo ($review['status'] === '未読') ? 'checked' : ''; ?>>
                 <label for="status1">未読</label>
-                <input type="radio" id="status" name="status1" value="未読">
             </div>
             <div>
+                <input type="radio" id="status2" name="status" value="読んでる"
+                    <?php echo ($review['status'] === '読んでる') ? 'checked' : ''; ?>>
                 <label for="status2">読んでる</label>
-                <input type="radio" id="status" name="status2" value="読んでいる">
             </div>
             <div>
+                <input type="radio" id="status3" name="status" value="読了"
+                    <?php echo ($review['status'] === '読了') ? 'checked' : ''; ?>>
                 <label for="status3">読了</label>
-                <input type="radio" id="status" name="status3" value="読了">
             </div>
         <div>
             <label for="rate">評価(5点満点の整数)</label>
-            <input type="number" id="rate" name="rate" max="5" min="0">
+            <input type="number" id="rate" name="rate" max="5" min="1" value="<?php echo $review['rate'] ?>">
         </div>
         <div>
             <label for="review">感想</label>
-            <textarea type="text" id="review" name="review"></textarea>
+            <textarea type="text" id="review" name="review"><?php echo $review['review'] ?></textarea>
         </div>
         <button type="submit">登録する</button>
     </form>

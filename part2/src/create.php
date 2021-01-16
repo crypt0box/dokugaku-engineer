@@ -46,7 +46,7 @@ function validate($review)
     }
 
     // 読書状況
-    if (in_array($review['status'], ['読了', '読んでる', '未読'])) {
+    if (!in_array($review['status'], ['読了', '読んでる', '未読'])) {
         $errors['status'] = '読書状況を選択してください';
     }
 
