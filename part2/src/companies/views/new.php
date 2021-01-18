@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,
     initial-scale=1">
-    <link rel="stylesheet" href="../vendor/twbs/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="stylesheets/css/app.css">
     <title>会社情報の登録</title>
 </head>
 
