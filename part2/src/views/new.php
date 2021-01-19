@@ -10,6 +10,11 @@
 </head>
 
 <body>
+    <header class="navbar shadow-sm mx-3">
+        <h1>
+            <a class="text-body text-decoraiton-none" href="index.php">読書ログ</a>
+        </h1>
+    </header>
     <div class="container">
         <h1 class="h2 text-dark mt-4 mb-4">読書ログの登録</h1>
         <form action="create.php" method="POST"> 
