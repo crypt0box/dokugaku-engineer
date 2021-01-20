@@ -5,13 +5,13 @@
         <?php foreach ($companies as $company) : ?>
             <section>
                 <h2>
-                    <?php echo $company['name']; ?>
+                    <?php echo escape($company['name']); ?>
                 </h2>
                 <div>
-                    創業：<?php echo $company
-                    ['establishment_date']; ?>年&nbsp;|&nbsp;
-                    代表：<?php echo $company
-                    ['founder']; ?>
+                    創業：<?php echo escape($company
+                    ['establishment_date']); ?>年&nbsp;|&nbsp;
+                    代表：<?php echo escape($company
+                    ['founder']); ?>
                 </div>
             </section>
         <?php endforeach; ?>
