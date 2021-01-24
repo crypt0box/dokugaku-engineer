@@ -19,6 +19,6 @@
             </section>
         <?php endforeach; ?>
     <?php else : ?>
-        <p>会社情報が登録されていません。</p>
+        <p>読書ログが登録されていません。</p>
     <?php endif; ?>
 </main>
