@@ -21,7 +21,8 @@ function getInput()
     return array_chunk($argument, SPILIT_LENGTH);
 }
 
-function groupSoldBreads(array $inputs): array {
+function groupSoldBreads(array $inputs): array 
+{
     $soldBreads = [];
     foreach ($inputs as $input) {
         $soldBreadNumber = $input[0];
@@ -36,7 +37,8 @@ function groupSoldBreads(array $inputs): array {
     return $soldBreads;
 };
 
-function calculateTotalCost(array $soldBreads): int {
+function calculateTotalCost(array $soldBreads): int
+{
     $totalCost = 0;
     foreach ($soldBreads as $soldBreadNumber => $quantity) {
         $totalCost += BREAD_VALUE_LIST[$soldBreadNumber] * $quantity;
@@ -45,12 +47,28 @@ function calculateTotalCost(array $soldBreads): int {
     return $totalCost;
 }
 
-function display(array $soldBreads): void {
-    echo calculateTotalCost($soldBreads) . PHP_EOL;
-    echo array_search(max($soldBreads), $soldBreads) . PHP_EOL;
-    echo array_search(min($soldBreads), $soldBreads) . PHP_EOL;
+function getNumbersOfMax(array $soldBreads): array
+{
+    $max = max(array_values($soldBreads));
+    return array_keys($soldBreads, $max);
+}
+
+function getNumbersOfMin(array $soldBreads): array
+{
+    $min = min(array_values($soldBreads));
+    return array_keys($soldBreads, $min);
+}
+
+function display(array ...$results): void
+{
+    foreach ($results as $result) {
+        echo implode(' ', $result) . PHP_EOL;
+    }
 }
 
 $inputs = getInput();
 $soldBreads = groupSoldBreads($inputs);
-display($soldBreads);
+$totalCost = calculateTotalCost($soldBreads);
+$numbersOfMax = getNumbersOfMax($soldBreads);
+$numbersOfMin = getNumbersOfMin($soldBreads);
+display([$totalCost], $numbersOfMax, $numbersOfMin);
